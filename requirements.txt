@@ -1,0 +1,9 @@
+pandas
+numpy
+beautifulsoup4
+selenium
+requests
+papermill
+statsmodels
+scikit-learn
+openai
