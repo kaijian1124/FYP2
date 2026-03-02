@@ -22,7 +22,7 @@ jobs:
 
       - name: Run DataCollection
         env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_API_KEY: ${{ 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 }}
         run: |
           papermill DataCollection.ipynb out.ipynb
 
