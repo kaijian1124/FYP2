@@ -40,7 +40,7 @@ jobs:
       - name: Commit data
         run: |
           git config user.name "github-actions"
-          git config user.email "actions@github.com"
-          git add Source/Data
-          git commit -m "auto update data" || echo "no changes"
-          git push
+          git config user.email "github-actions@github.com"
+          git add Source/Data/raw/stock/Maybank_Stocks_Data.csv
+          git commit -m "auto update data" || echo "No changes to commit"
+          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/kaijian1124/FYP2.git HEAD:main
