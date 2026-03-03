@@ -27,7 +27,6 @@ jobs:
           source /usr/share/miniconda/etc/profile.d/conda.sh
           conda activate myenv
           pip install -r requirements.txt
-          python -m ipykernel install --user --name conda-base-py --display-name "conda-base-py"
 
       # 4️⃣ 运行 notebook
       - name: Run DataCollection
