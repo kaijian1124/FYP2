@@ -2,42 +2,41 @@ name: data pipeline
 
 on:
   schedule:
-    - cron: "0 18 * * *"  # 每天 UTC 18:00
-  workflow_dispatch:      # 允许手动触发
+    - cron: "0 18 * * *"   # 每天 UTC 18:00
+  workflow_dispatch:
 
 jobs:
   run:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Checkout repo
       - uses: actions/checkout@v4
 
-      # 2️⃣ 安装 Miniconda
       - name: Install conda
         uses: conda-incubator/setup-miniconda@v2
         with:
           python-version: "3.10"
+          auto-activate-base: false
 
-      # 3️⃣ 创建环境、安装依赖并注册 kernel
-      - name: Create environment and register kernel
+      - name: Create environment and install dependencies
+        shell: bash -l {0}
         run: |
           conda create -n myenv python=3.10 -y
-          # 初始化 conda
-          source /usr/share/miniconda/etc/profile.d/conda.sh
           conda activate myenv
-          pip install -r requirements.txt
 
-      # 4️⃣ 运行 notebook
+          pip install -r requirements.txt
+          pip install ipykernel papermill
+
+          python -m ipykernel install --user --name myenv --display-name "myenv"
+
       - name: Run DataCollection
+        shell: bash -l {0}
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
-          source /usr/share/miniconda/etc/profile.d/conda.sh
           conda activate myenv
-          papermill DataCollection.ipynb out.ipynb -k conda-base-py
+          papermill DataCollection.ipynb out.ipynb -k myenv
 
-      # 5️⃣ Commit 数据回 repo
       - name: Commit data
         run: |
           git config user.name "github-actions"
