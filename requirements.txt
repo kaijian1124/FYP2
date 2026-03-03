@@ -7,3 +7,6 @@ papermill
 statsmodels
 scikit-learn
 openai
+matplotlib
+yfinance
+mplfinance
