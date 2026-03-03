@@ -24,7 +24,7 @@ jobs:
         run: |
           conda create -n myenv python=3.10 -y
           # 初始化 conda
-          source $HOME/miniconda/etc/profile.d/conda.sh
+          source /usr/share/miniconda/etc/profile.d/conda.sh
           conda activate myenv
           pip install -r requirements.txt
           python -m ipykernel install --user --name conda-base-py --display-name "conda-base-py"
@@ -34,7 +34,7 @@ jobs:
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
-          source $HOME/miniconda/etc/profile.d/conda.sh
+          source /usr/share/miniconda/etc/profile.d/conda.sh
           conda activate myenv
           papermill DataCollection.ipynb out.ipynb -k conda-base-py
 
